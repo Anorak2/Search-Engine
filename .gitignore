@@ -1,0 +1,68 @@
+# Local files (source documents, notes, etc.)
+.local/
+temp/
+CLAUDE.md
+
+# Dependencies
+frontend/node_modules/
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+venv/
+env/
+.venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+*.tfvars
+*.tfvars.local
+.env.tfvars
+local.settings.json
+
+# Build outputs
+dist/
+build/
+*.egg-info/
+
+# Logs
+*.log
+logs/
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Azure Functions
+local.settings.json
+
+# Terraform
+**/.terraform/
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.backup
+*.tfplan
+tfplan
+plan_output.txt
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Deployment artifacts
+api.zip

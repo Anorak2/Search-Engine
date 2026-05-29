@@ -1,0 +1,74 @@
+---
+services:
+  # Java API for site
+  # -------------------------------------------------------
+  api:
+    build:
+      context: .
+      dockerfile: src/docker/api.Dockerfile
+      target: development
+    container_name: search-api
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      APP_ENV: ${APP_ENV}
+      DEBUG: ${DEBUG}
+    ports:
+      - "${API_PORT}:8001"
+    volumes:
+      - ./src/api:/src/api
+    networks:
+      - search-network
+    depends_on:
+      search-postgres:
+        condition: service_healthy
+        restart: true
+    restart: unless-stopped
+
+  # Vue 3 Frontend
+  # -------------------------------------------------------
+  frontend:
+    build:
+      context: .
+      dockerfile: src/docker/frontend.Dockerfile
+      target: development
+    ports:
+      - "${FRONTEND_PORT}:5173"
+    container_name: search-frontend
+    volumes:
+      - ./src/frontend:/app:Z
+      - /app/node_modules
+    networks:
+      - search-network
+    restart: unless-stopped
+
+  # Postgres Database
+  # -------------------------------------------------------
+  search-postgres:
+    image: postgres:16-alpine
+    container_name: ${POSTGRES_SERVER}
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - search_data:/var/lib/postgresql/data
+      - ./src/docker/postgres-init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 5s
+    networks:
+      - search-network
+
+networks:
+  search-network:
+    driver: bridge
+
+volumes:
+  search_data:
+    driver: local
