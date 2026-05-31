@@ -1,6 +1,6 @@
 ---
 services:
-  # Java API for site
+  # Java API for site/search engine capabilities
   # -------------------------------------------------------
   api:
     build:
@@ -64,6 +64,25 @@ services:
       timeout: 5s
     networks:
       - search-network
+
+  # Java API for site
+  # -------------------------------------------------------
+  crawler:
+    build:
+      context: .
+      dockerfile: src/docker/web-crawler.Dockerfile
+      target: development
+    container_name: search-web-crawler
+    environment:
+      APP_ENV: ${APP_ENV}
+      DEBUG: ${DEBUG}
+    networks:
+      - search-network
+    depends_on:
+      search-postgres:
+        condition: service_healthy
+        restart: true
+    restart: unless-stopped
 
 networks:
   search-network:

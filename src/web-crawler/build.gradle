@@ -1,0 +1,16 @@
+sourceSets {
+	main {
+		java {
+			srcDirs = ['src/main']
+		}
+	}
+}
+
+jar {
+	manifest {
+		attributes 'Main-Class': 'mainClass'
+	}
+}
+
+dependencies {
+}
