@@ -65,17 +65,38 @@ services:
     networks:
       - search-network
 
-  # Java API for site
+  # The Web Crawler's Node Coordinator
   # -------------------------------------------------------
-  crawler:
+  coordinator:
     build:
       context: .
       dockerfile: src/docker/web-crawler.Dockerfile
       target: development
-    container_name: search-web-crawler
+    container_name: crawler-coordinator
     environment:
       APP_ENV: ${APP_ENV}
       DEBUG: ${DEBUG}
+      NODE_TYPE: "coordinator"
+    networks:
+      - search-network
+    ports:
+      - "${COORD_PORT}:8001"
+    depends_on:
+      search-postgres:
+        condition: service_healthy
+        restart: true
+    restart: unless-stopped
+  worker1:
+    build:
+      context: .
+      dockerfile: src/docker/web-crawler.Dockerfile
+      target: development
+    container_name: crawler-worker1
+    environment:
+      APP_ENV: ${APP_ENV}
+      DEBUG: ${DEBUG}
+      NODE_TYPE: "worker"
+      COORD_LOCATION: "localhost:${COORD_PORT}"
     networks:
       - search-network
     depends_on:
