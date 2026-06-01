@@ -1,9 +1,26 @@
 import com.gecko.Config.Config;
+import com.gecko.coordinator.Coordinator;
+import com.gecko.worker.Worker;
 
+/*
+ * The main entry point for the application
+ */
 public class MainClass {
     public static void main(String[] args) {
         System.out.println("The crawler container initialized correctly");
 		Config configurator = Config.getInstance();
-		System.out.println(configurator.appEnv);
+
+		if(configurator.nodeType.equals("coordinator")){
+			Coordinator node = new Coordinator();
+
+		}
+		else if(configurator.nodeType.equals("worker")){
+			Worker node = new Worker();
+
+		}
+		else {
+			System.out.println("invalid NODE_TYPE");
+			System.out.println(configurator.nodeType);
+		}
     }
 }

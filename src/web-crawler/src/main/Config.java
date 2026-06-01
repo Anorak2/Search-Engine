@@ -7,15 +7,22 @@ public class Config {
 	public String appEnv;
 	public String debugLevel;
 	public String nodeType;
-	public String cordLocation;
+	public String dbUsername;
+	public String dbPassword;
+	public String dbUrl;
+
+	public String coordinatorLocation;
 
 	private static volatile Config obj = null;
 
 	private Config(){
-		this.appEnv = System.getenv("APP_ENV");
-		this.debugLevel = System.getenv("DEBUG");
-		this.nodeType = System.getenv("NODE_TYPE");
-		this.cordLocation = System.getenv("COORD_LOCATION");
+		this.appEnv      = System.getenv("APP_ENV");
+		this.debugLevel  = System.getenv("DEBUG");
+		this.nodeType    = System.getenv("NODE_TYPE");
+		this.coordinatorLocation = System.getenv("COORD_LOCATION");
+		this.dbUsername  = System.getenv("DB_USER");
+		this.dbPassword  = System.getenv("DB_PASSWORD");
+		this.dbUrl      = System.getenv("DB_URL");
 	}
 
 	public static Config getInstance() {

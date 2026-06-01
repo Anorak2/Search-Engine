@@ -46,13 +46,13 @@ services:
   # -------------------------------------------------------
   search-postgres:
     image: postgres:16-alpine
-    container_name: ${POSTGRES_SERVER}
+    container_name: search-postgres
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
     ports:
-      - "${POSTGRES_PORT}:5432"
+      - "${DB_PORT}:5432"
     volumes:
       - search_data:/var/lib/postgresql/data
       - ./src/docker/postgres-init.sql:/docker-entrypoint-initdb.d/init.sql
@@ -97,6 +97,9 @@ services:
       DEBUG: ${DEBUG}
       NODE_TYPE: "worker"
       COORD_LOCATION: "localhost:${COORD_PORT}"
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      DB_URL: "jdbc:postgresql://${DB_HOSTNAME}:${DB_PORT}/${POSTGRES_DB}"
     networks:
       - search-network
     depends_on:
