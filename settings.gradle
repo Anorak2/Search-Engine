@@ -1,2 +1,2 @@
 rootProject.name = 'yourapp'
-include 'src:api', 'src:web-crawler'
+include 'api', 'web-crawler'

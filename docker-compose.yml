@@ -5,7 +5,7 @@ services:
   api:
     build:
       context: .
-      dockerfile: src/docker/api.Dockerfile
+      dockerfile: docker/api.Dockerfile
       target: development
     container_name: search-api
     extra_hosts:
@@ -16,7 +16,7 @@ services:
     ports:
       - "${API_PORT}:8001"
     volumes:
-      - ./src/api:/src/api
+      - ./api:/src/api
     networks:
       - search-network
     depends_on:
@@ -30,13 +30,13 @@ services:
   frontend:
     build:
       context: .
-      dockerfile: src/docker/frontend.Dockerfile
+      dockerfile: docker/frontend.Dockerfile
       target: development
     ports:
       - "${FRONTEND_PORT}:5173"
     container_name: search-frontend
     volumes:
-      - ./src/frontend:/app:Z
+      - ./frontend:/app:Z
       - /app/node_modules
     networks:
       - search-network
@@ -55,7 +55,7 @@ services:
       - "${DB_PORT}:5432"
     volumes:
       - search_data:/var/lib/postgresql/data
-      - ./src/docker/postgres-init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./docker/postgres-init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
       interval: 10s
@@ -70,7 +70,7 @@ services:
   coordinator:
     build:
       context: .
-      dockerfile: src/docker/web-crawler.Dockerfile
+      dockerfile: docker/web-crawler.Dockerfile
       target: development
     container_name: crawler-coordinator
     environment:
@@ -89,7 +89,7 @@ services:
   worker1:
     build:
       context: .
-      dockerfile: src/docker/web-crawler.Dockerfile
+      dockerfile: docker/web-crawler.Dockerfile
       target: development
     container_name: crawler-worker1
     environment:

@@ -10,8 +10,8 @@ WORKDIR /app
 FROM base AS dependencies
 
 # Copy package files
-COPY src/frontend/package.json .
-COPY src/frontend/pnpm-lock.yaml .
+COPY frontend/package.json .
+COPY frontend/pnpm-lock.yaml .
 
 # Install dependencies
 RUN pnpm install --frozen-lockfile
@@ -24,7 +24,7 @@ FROM base AS development
 COPY --from=dependencies /app/node_modules ./node_modules
 
 # Copy source code
-COPY src/frontend/ .
+COPY frontend/ .
 
 # Expose Vite dev server port
 EXPOSE 5173
