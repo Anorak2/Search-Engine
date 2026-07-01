@@ -1,6 +1,7 @@
-import com.gecko.Config.Config;
-import com.gecko.coordinator.Coordinator;
-import com.gecko.worker.Worker;
+package crawler;
+
+import crawler.coordinator.Coordinator;
+import crawler.worker.Worker;
 
 /*
  * The main entry point for the application

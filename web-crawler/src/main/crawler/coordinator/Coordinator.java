@@ -1,14 +1,17 @@
-package com.gecko.coordinator;
+package crawler.coordinator;
 
 import java.sql.*;
-
-import com.gecko.Config.Config;
+import crawler.Config;
 
 public class Coordinator {
 	private Config config;
 
 	public Coordinator(){
 		this.config = Config.getInstance();
+	}
+
+	public void run(){
+		return;
 	}
 
 

@@ -1,4 +1,4 @@
-package com.gecko.Config;
+package crawler;
 
 /*
  * A singleton class for holding global configuration values

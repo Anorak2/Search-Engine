@@ -1,6 +1,6 @@
-package com.gecko.worker;
+package crawler.worker;
 
-import com.gecko.Config.Config;
+import crawler.Config;
 
 public class Worker {
 	private Config config;
