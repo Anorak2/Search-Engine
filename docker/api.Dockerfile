@@ -1,11 +1,11 @@
 # Build stage
-FROM gradle:7-jdk17 AS build
+FROM gradle:jdk21-ubi10 AS build
 WORKDIR /app
-COPY . .
-RUN gradle api:build --no-daemon
+COPY api/ .
+RUN gradle build --no-daemon
 
 # Runtime stage
-FROM eclipse-temurin:17-jre AS development
+FROM eclipse-temurin:21-jre AS development
 WORKDIR /app
-COPY --from=build /app/api/build/libs/*.jar app.jar
+COPY --from=build /app/build/libs/*.jar app.jar
 ENTRYPOINT ["java", "-jar", "app.jar"]

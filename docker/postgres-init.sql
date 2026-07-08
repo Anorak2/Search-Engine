@@ -12,4 +12,3 @@ DO $$
 BEGIN
     RAISE NOTICE 'feedback database initialized successfully';
 END $$;
-

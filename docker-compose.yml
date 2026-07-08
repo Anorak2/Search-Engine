@@ -76,7 +76,7 @@ services:
     environment:
       APP_ENV: ${APP_ENV}
       DEBUG: ${DEBUG}
-      NODE_TYPE: "coordinator"
+      SPRING_PROFILES_ACTIVE: coordinator
     networks:
       - search-network
     ports:
@@ -95,7 +95,7 @@ services:
     environment:
       APP_ENV: ${APP_ENV}
       DEBUG: ${DEBUG}
-      NODE_TYPE: "worker"
+      SPRING_PROFILES_ACTIVE: worker
       COORD_LOCATION: "localhost:${COORD_PORT}"
       DB_USER: ${POSTGRES_USER}
       DB_PASSWORD: ${POSTGRES_PASSWORD}

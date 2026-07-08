@@ -38,6 +38,11 @@ dist/
 build/
 *.egg-info/
 .gradle
+.project
+.classpath
+.jar
+.settings
+bin
 
 # Logs
 *.log
