@@ -1,8 +1,14 @@
+// Config
+// Description: Holds all environment variables and global configuration values
+// Inputs: the .env variables passed to docker
+// Outputs:
+//
+// Authors: Adam Berry
+// Created On: 2026-6-1
+
+
 package crawler;
 
-/*
- * A singleton class for holding global configuration values
- */
 public class Config {
 	public String appEnv;
 	public String debugLevel;
@@ -27,7 +33,7 @@ public class Config {
 
 	public static Config getInstance() {
         if (obj == null) {
-			// just to be sure it is thread safe
+			// Thread safe just in case
             synchronized (Config.class) {
 				// Check again in case multiple threads reached at the same time
                 if (obj == null){

@@ -1,9 +1,11 @@
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.4.0'
+	// I believe it is needed to pull in the testing frameworks, needed or builds throw insane errors
 	id 'io.spring.dependency-management' version '1.1.7'
 }
 
+// Use non-standard buildpaths, I didn't want to add even more layers
 sourceSets {
 	main {
 		java {
@@ -32,8 +34,14 @@ repositories {
 }
 
 dependencies {
+	// Used for pulling and parsing web pages
+	implementation 'org.jsoup:jsoup:1.22.2'
+	// Intended use is for adding core API support for coordinator/worker communication
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// Not used at time of writing, the plan is it supports junit testing with springboot
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	// Not used at time of writing, intended to create the testing "structure" / core
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
